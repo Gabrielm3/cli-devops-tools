@@ -11,11 +11,11 @@ func CheckPort(host string, ports []string) {
 		timeout := time.Second
 		conn, err := net.DialTimeout("tcp", net.JoinHostPort(host, port), timeout)
 		if err != nil {
-			fmt.Printf("Porta %s está fechada.\n", port)
+			fmt.Printf("Porta %s está fechada para o host %s. \n", port, host)
 		}
 
 		if conn != nil {
-			fmt.Printf("Porta %s está aberta. \n", port)
+			fmt.Printf("Porta %s está aberta para o host %s. \n", port, host)
 			defer conn.Close()
 		}
 	}
