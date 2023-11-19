@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"cli-go/utils"
 
 	"github.com/spf13/cobra"
 )
@@ -16,11 +16,24 @@ var base64Cmd = &cobra.Command{
 		decode: ./main base64 --d "string"
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("base64 called")
+		encodeStr, _ := cmd.Flags().GetString("e")
+		decodeStr, _ := cmd.Flags().GetString("d")
+
+		if encodeStr != "" {
+			encode := utils.EncodeString(encodeStr)
+			cmd.Println(encode)
+		}
+
+		if decodeStr != "" {
+			decode := utils.DecodeString(decodeStr)
+			cmd.Println(decode)
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(base64Cmd)
-	
+
+	base64Cmd.PersistentFlags().String("e", "", "Encode string")
+	base64Cmd.PersistentFlags().String("d", "", "Decode string")
 }
